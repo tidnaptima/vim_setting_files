@@ -1,0 +1,82 @@
+" set the runtime path to include Vundle and initialize
+filetype plugin on
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'git://git.wincent.com/command-t.git'
+Plugin 'file:///home/gmarik/path/to/plugin'
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plugin 'scrooloose/nerdtree'
+"'Plugin 'scroolnoose/nerdtree'
+
+"All the plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+"--General Setting--"
+
+set nocompatible
+
+set ruler
+set nonumber "setting to number ince change is required
+set showcmd
+set incsearch
+set hlsearch
+
+syntax on
+set mouse=a
+let Tlist_Use_Right_Window = 1
+let Tlist_Auto_Open = 0
+let Tlist_Exit_OnlyWindow = 1
+let Tlist_WinWidth = 38
+map <C-n> :NERDTreeToggle<CR>
+map <C-u> :TlistToggle<CR>
+"mapping ctrl + c to clipboard copy
+vmap <C-c> "*y
+vmap <C-c> "+y
+"autocmd BufEnter * lcd %:p:h
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+"Vi mappings
+cs add cscope.out
+nmap <C-\>s :vert scs find s <C-R>=expand("<cword>")<CR><CR>    
+nmap <C-\>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>    
+nmap <C-\>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>    
+nmap <C-\>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>    
+nmap <C-\>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>    
+nmap <C-\>f :vert scs find f <C-R>=expand("<cfile>")<CR><CR>
+
+"Vi mapping for copy to clipboard
+"
+"
+
+"setting the status bar in the bottom
+set laststatus=2
+
+"double click to select a word
+":let @/='\V\<'.escape(expand('<cword>'), '\').'\>'
+":let @+=expand('<cword>')
+"nnoremap <silent> <2-LeftMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>:let @+=expand('<cword>')
+set tabstop=4
+set expandtab
+set shiftwidth=4
+set autoindent
+set smartindent
+set cindent
+
+"automatically add ctags - 
+:set tags=tags;/
+
+"automatically load cscope files 
+
+"status line
+"set statusline +=\ %{Tlist_Get_Tagname_By_Line()}
+":set statusline=%<%f%=%([%{Tlist_Get_Tagname_By_Line()}]%)
+:set statusline=%<%f%=%([%{Tlist_Get_Tagname_By_Line()}]%)
+:set statusline+=\ \ %l/%L   "cursor line/total line
+:set statusline+=\ \ %P    "percent through file
